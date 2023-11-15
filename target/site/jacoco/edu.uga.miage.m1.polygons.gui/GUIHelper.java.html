@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GUIHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Persistence_g1_8</a> &gt; <a href="index.source.html" class="el_package">edu.uga.miage.m1.polygons.gui</a> &gt; <span class="el_source">GUIHelper.java</span></div><h1>GUIHelper.java</h1><pre class="source lang-java linenums">package edu.uga.miage.m1.polygons.gui;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+/**
+ *  @author &lt;a href=&quot;mailto:christophe.saint-marcel@univ-grenoble-alpes.fr&quot;&gt;Christophe&lt;/a&gt;
+ *
+ */
+<span class="nc" id="L9">public class GUIHelper {</span>
+	
+	public static void showOnFrame(String frameName) {
+<span class="nc" id="L12">		JDrawingFrame frame = new JDrawingFrame(frameName);</span>
+<span class="nc" id="L13">		WindowAdapter wa = new WindowAdapter() {</span>
+			public void windowClosing(WindowEvent e) {
+<span class="nc" id="L15">				System.exit(0);</span>
+<span class="nc" id="L16">			}</span>
+		};
+<span class="nc" id="L18">		frame.addWindowListener(wa);</span>
+<span class="nc" id="L19">		frame.pack();</span>
+<span class="nc" id="L20">		frame.setVisible(true);</span>
+<span class="nc" id="L21">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
