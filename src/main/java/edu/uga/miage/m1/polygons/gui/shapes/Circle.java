@@ -84,4 +84,10 @@ public class Circle implements SimpleShape, Visitable {
         }
         return res;
     }
+
+    @Override
+    public SimpleShape clone() {
+        Circle c = new Circle(m_x, m_y);
+        return c;
+    }
 }

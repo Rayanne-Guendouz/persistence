@@ -11,7 +11,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.plaf.nimbus.State;
 
 import java.awt.*;
 
@@ -37,8 +37,6 @@ import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 import edu.uga.singleshape.CubePanel;
 
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * This class represents the main application class, which is a JFrame subclass
@@ -52,9 +50,19 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
 
         SQUARE, TRIANGLE, CIRCLE,CUBE
     }
-    private enum Actions {
-        PLACESHAPE, MOVESHAPE
+    // Pour la sauvegarde
+    private class stateOfPaint {
+        private ArrayList<Visitable> shapesList;
+        public ArrayList<Visitable> getShapesList() {
+            return shapesList;
+        }
+        public void setShapesList(ArrayList<Visitable> shapesList) {
+            this.shapesList = shapesList;
+        }
     }
+
+    private ArrayList<stateOfPaint> stateOfPaintList = new ArrayList<stateOfPaint>();
+
     private static final long serialVersionUID = 1L;
 
     private JToolBar m_toolbar;
@@ -77,22 +85,15 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
      * Default constructor that populates the main window.
      * @param frameName
      */
-    // Liste des objets visitable
-    public ArrayList<Visitable> shapesList = new ArrayList<Visitable>();
 
     // Controller Command
     private RemoteControl remoteControl = new RemoteControl();
 
-    // Liste des objets SimpleSHape 
-    private ArrayList<SimpleShape> simpleShapes = new ArrayList<SimpleShape>();
 
     private long lastCtrlZPressTime = 0;
     private static final long CTRL_Z_DELAY = 500; // Délai d'attente en millisecondes (0.5 seconde ici)
 
-    // Liste des dernière actions de l'utilisateur
-    private ArrayList<Actions> actionsList = new ArrayList<Actions>();
     // Pour le déplacement de la forme
-    private ArrayList<Point> position = new ArrayList<Point>();
     private SimpleShape selectedShape;
     private boolean isShapeSelected = false;
     private int xShape;
@@ -110,7 +111,7 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         m_panel.addMouseMotionListener(this);
         m_label = new JLabel(" ", JLabel.LEFT);
         // Initialisation de shapesList
-        shapesList = new ArrayList<Visitable>();
+        ArrayList<Visitable> shapesList = new ArrayList<Visitable>();
         // Fills the panel
         setLayout(new BorderLayout());
         add(m_toolbar, BorderLayout.NORTH);
@@ -133,8 +134,26 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         setFocusTraversalKeysEnabled(true);
         // Ajoutez un gestionnaire de focus pour gérer le focus entre les composants
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventController());
+        addStateOfPaint(shapesList);
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Getters et Setters
+    public SimpleShape getSelectedShape() {
+        return selectedShape;
     }
 
+    public boolean isShapeSelected() {
+        return isShapeSelected;
+    }
+
+    public Shapes getSelected() {
+        return m_selected;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Pour le controle des Etats et de la liste des formes
     /**
      * Injects an available <tt>SimpleShape</tt> into the drawing frame.
      * @param name The name of the injected <tt>SimpleShape</tt>.
@@ -154,69 +173,142 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         repaint();
     }
 
-    public  ArrayList<Visitable> getShapesList() {
+    private void addStateOfPaint(ArrayList<Visitable> shapesList) {
+        stateOfPaint stateOfPaint = new stateOfPaint();
+        stateOfPaint.setShapesList(shapesList);
+        stateOfPaintList.add(stateOfPaint);
+        printStates();
+    }
+
+    private ArrayList<Visitable> buildShapeList(int index){
+        ArrayList<Visitable> shapesList = new ArrayList<Visitable>();
+        for (Visitable shape : stateOfPaintList.get(index).getShapesList()) {
+            shapesList.add(shape);
+        }
         return shapesList;
     }
+
+    private void paintSimpleShapes(Graphics2D g2) {
+        ArrayList<Visitable> shapesList = buildShapeList(stateOfPaintList.size()-1);
+        Visitable visitable = (Visitable) selectedShape;
+        shapesList.remove(visitable);
+        for (Visitable shape : shapesList) {
+            SimpleShape simpleShape = (SimpleShape) shape;
+            simpleShape.draw(g2);
+        }
+    }
     
-    public ArrayList<Actions> getActionsList() {
-        return actionsList;
+
+    
+    public void printStates(){
+        System.out.println("--------------------------------------------------");
+        // Print du dernier état de la liste et de la liste des formes
+        System.out.println("Nombre de formes Etat courant : " + stateOfPaintList.get(stateOfPaintList.size()-1).getShapesList().size());
+        System.out.println("Nombre d'états : " + stateOfPaintList.size());
+        for(stateOfPaint stateOfPaint : stateOfPaintList) {
+            System.out.println("Etat n°" + stateOfPaintList.indexOf(stateOfPaint) + " :");
+            System.out.println("Nombre de formes : " + stateOfPaint.getShapesList().size());
+            for(Visitable shape : stateOfPaint.getShapesList()) {
+                SimpleShape simpleShape = (SimpleShape) shape;
+                System.out.println(simpleShape.getClass().getName() + ":" + simpleShape.getX() + "," + simpleShape.getY());
+
+            }
+            System.out.println("--------------------------------------------------");
+
+        }
+        System.out.println("--------------------------------------------------");
     }
 
-    public ArrayList<Point> getPosition() {
-        return position;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// Pour le dessin des formes
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///Pour Ajouter une forme
+    /**
+     * Implements method for the <tt>MouseListener</tt> interface to
+     * draw the selected shape into the drawing canvas when we add a shape.
+     * @param evt The associated mouse event.
+     */
+    public void drawShape(MouseEvent evt){
+        Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+        ArrayList<Visitable> shapesList = buildShapeList(stateOfPaintList.size()-1);
+        SimpleShape simpleShape = null;
+        switch(m_selected) {
+            case CIRCLE:
+                simpleShape = new Circle(evt.getX(), evt.getY());
+                break;
+            case TRIANGLE:
+                simpleShape = new Triangle(evt.getX(), evt.getY());
+                break;
+            case SQUARE:
+                simpleShape = new Square(evt.getX(), evt.getY());
+                break;
+            case CUBE:
+                simpleShape = new Cube(evt.getX(),evt.getY());
+                break;
+            default:
+                System.out.println("No shape named " + m_selected);
+        }
+        simpleShape.draw(g2);
+        // Ajout de l'objet dans la liste
+        Visitable visitable = (Visitable) simpleShape;
+        shapesList.add(visitable);
+        // Ajout de l'etat dans la liste
+        addStateOfPaint(shapesList);
     }
 
-    public SimpleShape getSelectedShape() {
-        return selectedShape;
-    }
-
-    public boolean isShapeSelected() {
-        return isShapeSelected;
-    }
-
-    public ArrayList<SimpleShape> getSimpleShapes() {
-        return simpleShapes;
-    }
-
-    public Shapes getSelected() {
-        return m_selected;
-    }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Pour le deplacement de la forme
+    /**
+     * Implements method for the <tt>MouseListener</tt> interface to
+     * draw the selected shape into the drawing canvas when we select a shape.
+     * @param shape The associated shape.
+     */
     public void selectShape(SimpleShape shape){
         isShapeSelected = true;
-        selectedShape = shape;
-        //Destruction de la forme
-        int xShape = shape.getX();
-        int yShape = shape.getY();
-        position.add(new Point(xShape, yShape));
-        simpleShapes.remove(shape);
+        selectedShape = shape.clone();
+        ArrayList<Visitable>shapesList = buildShapeList(stateOfPaintList.size()-1);
+        shapesList.remove((Visitable)shape);
+        // Ajout de l'objet dans la liste
+        Visitable visitable = (Visitable) selectedShape;
+        shapesList.add(visitable);
+        // Ajout de l'etat dans la liste
+        addStateOfPaint(shapesList);
+        //Deplacement de la forme
         Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
         // Redessine toutes les formes restantes
-        for (SimpleShape shape2 : simpleShapes) {
-            shape2.draw(g2);
-        }
+        paintSimpleShapes(g2);
+        printStates();
     }
 
+    /**
+     * Implements method for the <tt>MouseListener</tt> interface to
+     * draw the selected shape into the drawing canvas when we move a shape.
+     * @param evt The associated mouse event.
+     */
     public void moveShapeMouse(MouseEvent evt) {
         // Mettez à jour les coordonnées de la forme en fonction de la position de la souris
         int newX = evt.getX() - xShape;
         int newY = evt.getY() - yShape;
-        // Dessinez la forme à la nouvelle position
+        //Deplacement de la forme
         Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
-        // Dessinez toutes les formes restantes
-        for (SimpleShape shape : simpleShapes) {
-            shape.draw(g2);
-        }
+        // Redessine toutes les formes restantes
+        paintSimpleShapes(g2);
         // Dessinez la forme actuellement déplacée à la nouvelle position
         selectedShape.setX(newX);
         selectedShape.setY(newY);
         selectedShape.draw(g2);
     }
 
+    /**
+     * Implements method for the <tt>MouseListener</tt> interface to
+     * draw the selected shape into the drawing canvas when we release a shape.
+     * @param evt The associated mouse event.
+     */
     public void releaseShape(MouseEvent evt) {
         // Mettez à jour les coordonnées de la forme en fonction de la position de la souris
         int newX = evt.getX() - xShape;
@@ -226,18 +318,91 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         g2.setColor(Color.WHITE);
         g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
         // Dessinez toutes les formes restantes
-        for (SimpleShape shape : simpleShapes) {
-            shape.draw(g2);
-        }
+        paintSimpleShapes(g2);
         // Dessinez la forme actuellement déplacée à la nouvelle position
         selectedShape.setX(newX);
         selectedShape.setY(newY);
         selectedShape.draw(g2);
-        // Ajout de la forme dans la liste
-        simpleShapes.add(selectedShape);
         isShapeSelected = false;
+        selectedShape = null;
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // pour le retour arrière
+    /**
+     * Implements method for the <tt>MouseListener</tt> interface to
+     * draw the selected shape into the drawing canvas when we release a shape.
+     * @param evt The associated mouse event.
+     */
+    public void goBack() {
+        if (!stateOfPaintList.isEmpty() && stateOfPaintList.size() > 1) {
+            stateOfPaintList.remove(stateOfPaintList.size()-1); // Supprime le dernier état
+            ArrayList<Visitable>shapesList = buildShapeList(stateOfPaintList.size()-1); // Récupère la liste des formes
+            // Efface le panneau
+            Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+            g2.setColor(Color.WHITE);
+            g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
+            // Redessine toutes les formes restantes
+            for (Visitable shape : shapesList) {
+                SimpleShape simpleShape = (SimpleShape) shape;
+                simpleShape.draw(g2);
+            }
+            printStates();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // pour la sauvegarde
+    /**
+     * Implements method for the <tt>MouseListener</tt> interface to
+     * draw the selected shape into the drawing canvas when we release a shape.
+     * @param evt The associated mouse event.
+     */
+    public void save(){
+        String jsonData = "{\n  \"shapes\": [\n";
+        String xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n" + //
+                "<root>\r\n" + //
+                "<shapes>\n";
+        // ItÃ¨re sur tous les objets
+        ArrayList<Visitable> shapesList = buildShapeList(stateOfPaintList.size()-1);
+        for (Visitable shape : shapesList) {
+            // DonnÃ©e de sauvegarde XML
+            XMLVisitor xmlVisitor = new XMLVisitor();
+            // DonnÃ©e de sauvegarde JSON
+            JSonVisitor jsonVisitor = new JSonVisitor();
+            // Sauvegarde en JSON
+            shape.accept(jsonVisitor);
+            jsonData += "   " + jsonVisitor.getRepresentation();
+            if (shapesList.indexOf(shape) < shapesList.size() - 1) {
+                jsonData += ",";
+            }
+            jsonData += "\n";
+            // Sauvegarde en XML
+            shape.accept(xmlVisitor);
+            xmlData += "    " + xmlVisitor.getRepresentation() + "\n";
+        }
+        // Imprime le JSON
+        jsonData += "  ]\n}";
+        // Imprime le XML
+        xmlData += "</shapes>\r\n</root>";
+
+        String cheminFichierJSON = "src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.json"; 
+        String cheminFichierXML = "src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.xml"; 
+
+        try (BufferedWriter jsonWriter = new BufferedWriter(new FileWriter(new File(cheminFichierJSON)));
+            BufferedWriter xmlWriter = new BufferedWriter(new FileWriter(new File(cheminFichierXML)))) {
+            jsonWriter.write(jsonData);
+            xmlWriter.write(xmlData);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Controlleur de l'utilisateur
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Controlleur de la souris
     /**
      * Implements method for the <tt>MouseListener</tt> interface to
      * draw the selected shape into the drawing canvas.
@@ -245,43 +410,8 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
      */
     public void mouseClicked(MouseEvent evt) {
         if (m_panel.contains(evt.getX(), evt.getY()) && !isShapeSelected) {
-            Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
-            actionsList.add(Actions.PLACESHAPE);
-            switch(m_selected) {
-                case CIRCLE:
-                    Circle circle = new Circle(evt.getX(), evt.getY());
-                    circle.draw(g2);
-                    // Ajout de l'objet dans la liste
-                    shapesList.add(circle);
-                    simpleShapes.add(circle);
-                    break;
-                case TRIANGLE:
-                    Triangle triangle = new Triangle(evt.getX(), evt.getY());
-                    triangle.draw(g2);
-                    // Ajout de l'objet dans la liste
-                    shapesList.add(triangle);
-                    simpleShapes.add(triangle);
-                    break;
-                case SQUARE:
-                    Square square = new Square(evt.getX(), evt.getY());
-                    square.draw(g2);
-                    // Ajout de l'objet dans la liste
-                    shapesList.add(square);
-                    simpleShapes.add(square);
-                    break;
-                case CUBE:
-                    Cube cube = new Cube(evt.getX(),evt.getY());
-                    shapesList.add(cube);
-                    simpleShapes.add(cube);
-                    Graphics2D g2d = (Graphics2D) g2;
-                    CubePanel c = new CubePanel(100, 100, 100);
-                    c.paintComponent(g2d);
-                    break;
-                default:
-                    System.out.println("No shape named " + m_selected);
-            }
+            drawShape(evt);
         }
-        
     }
 
     /**
@@ -307,14 +437,14 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
      */
     public void mousePressed(MouseEvent evt) {
         isShapeSelected = false;
-        for (SimpleShape shape : simpleShapes) {
-            if (shape.contains(evt.getPoint())) {
-                actionsList.add(Actions.MOVESHAPE);
+        ArrayList<Visitable> shapesList = buildShapeList(stateOfPaintList.size()-1);
+        for (Visitable shape : shapesList ) {
+            SimpleShape simpleShape = (SimpleShape) shape;
+            if (simpleShape.contains(evt.getPoint())) {
                 // Traitement du clic sur la forme
-                System.out.println("Clicked on shape: " + shape);
-                xShape = evt.getX() - shape.getX();
-                yShape = evt.getY() - shape.getY();
-                selectShape(shape);
+                xShape = evt.getX() - simpleShape.getX();
+                yShape = evt.getY() - simpleShape.getY();
+                selectShape(simpleShape);
             }
         }
     }
@@ -355,13 +485,30 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         m_label.setText("(" + evt.getX() + "," + evt.getY() + ")");
     }
 
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Controlleur du clavier
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Les listeners
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Les listener pour les boutons
     /**
      * Simple action listener for shape tool bar buttons that sets
      * the drawing frame's currently selected shape when receiving
      * an action event.
      */
     private class ShapeActionListener implements ActionListener {
-
         public void actionPerformed(ActionEvent evt) {
             // ItÃ¨re sur tous les boutons
             Iterator<Shapes> keys = m_buttons.keySet().iterator();
@@ -378,62 +525,24 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
             }
         }
     }
-    
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Les listener pour le bouton de sauvegarde
     // La fonction de sauvegarde
     public class SauvegardeActionListener implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
-                String jsonData = "{\n  \"shapes\": [\n";
-                String xmlData = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n" + //
-                        "<root>\r\n" + //
-                        "<shapes>\n";
-                // ItÃ¨re sur tous les objets
-                for (Visitable shape : shapesList) {
-                    // DonnÃ©e de sauvegarde XML
-                    XMLVisitor xmlVisitor = new XMLVisitor();
-                    // DonnÃ©e de sauvegarde JSON
-                    JSonVisitor jsonVisitor = new JSonVisitor();
-                    // Sauvegarde en JSON
-                    shape.accept(jsonVisitor);
-                    jsonData += "   " + jsonVisitor.getRepresentation();
-                    if (shapesList.indexOf(shape) < shapesList.size() - 1) {
-                        jsonData += ",";
-                    }
-                    jsonData += "\n";
-                    // Sauvegarde en XML
-                    shape.accept(xmlVisitor);
-                    xmlData += "    " + xmlVisitor.getRepresentation() + "\n";
-                }
-                // Imprime le JSON
-                jsonData += "  ]\n}";
-                // Imprime le XML
-                xmlData += "</shapes>\r\n</root>";
-
-                String cheminFichierJSON = "src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.json"; 
-                String cheminFichierXML = "src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.xml"; 
-
-                try (BufferedWriter jsonWriter = new BufferedWriter(new FileWriter(new File(cheminFichierJSON)));
-                    BufferedWriter xmlWriter = new BufferedWriter(new FileWriter(new File(cheminFichierXML)))) {
-                    jsonWriter.write(jsonData);
-                    xmlWriter.write(xmlData);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
+            save();
+        }
     }
-    
-    // La classe qui gère les entree clavier
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Le listener pour le clavier
     private class KeyEventController implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z) {
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastCtrlZPressTime >= CTRL_Z_DELAY && !shapesList.isEmpty() && !actionsList.isEmpty() && actionsList.get(actionsList.size()-1) == Actions.PLACESHAPE) {
-                    remoteControl.addCommand(new GoBack(JDrawingFrame.this));
-                    lastCtrlZPressTime = currentTime;
-                }
-                if(currentTime - lastCtrlZPressTime >= CTRL_Z_DELAY && !shapesList.isEmpty() && !actionsList.isEmpty() && actionsList.get(actionsList.size()-1) == Actions.MOVESHAPE) {
-                    // Ecrire la fonction qui remet à sa place la forme
+                if (currentTime - lastCtrlZPressTime >= CTRL_Z_DELAY) {
                     remoteControl.addCommand(new GoBack(JDrawingFrame.this));
                     lastCtrlZPressTime = currentTime;
                 }
@@ -442,33 +551,5 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
             remoteControl.reset();
             return false;
         }
-    }
-
-    // La fonction pour revenir en arrière
-    public void goBack() {
-        if (!shapesList.isEmpty()) {
-            shapesList.remove(shapesList.size() - 1); // Supprime la derniÃ¨re forme
-            simpleShapes.remove(simpleShapes.size()-1); // SUpprime la dernière forme
-            // Efface le panneau
-            Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
-            g2.setColor(Color.WHITE);
-            g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
-            // Redessine toutes les formes restantes
-            for (SimpleShape shape : simpleShapes) {
-                shape.draw(g2);
-            }
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
     }
 }

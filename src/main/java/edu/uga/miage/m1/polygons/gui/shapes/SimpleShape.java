@@ -26,4 +26,8 @@ public interface SimpleShape {
     void setY(int y);
 
     public abstract boolean contains(Point point);
+
+    public abstract SimpleShape clone();
+
+    
 }

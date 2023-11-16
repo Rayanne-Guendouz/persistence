@@ -33,7 +33,7 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  *
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  */
-public class Square implements SimpleShape, Visitable {
+public class Square implements SimpleShape, Visitable, Cloneable {
 
     int m_x;
 
@@ -92,5 +92,11 @@ public class Square implements SimpleShape, Visitable {
             res = true ;
         }
         return res;
+    }
+
+    @Override
+    public SimpleShape clone() {
+        Square c = new Square(m_x, m_y);
+        return c;
     }
 }
