@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.persistence;
 
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.Cube;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 
@@ -29,6 +30,11 @@ public class JSonVisitor implements Visitor {
     @Override
     public void visit(Triangle triangle) {
     	representation = "{\"type\": \"triangle\", \"x\": " + triangle.getX() + MIDJSON + triangle.getY() + ENDJSON;
+    }
+
+    @Override
+    public void visit(Cube cube) {
+    	representation = "{\"type\": \"cube\", \"x\": " + cube.getX() + MIDJSON + cube.getY() + ENDJSON;
     }
 
     /**

@@ -31,9 +31,12 @@ import edu.uga.miage.m1.polygons.gui.persistence.JSonVisitor;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.XMLVisitor;
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.Cube;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import edu.uga.singleshape.CubePanel;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -47,7 +50,7 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
 
     public enum Shapes {
 
-        SQUARE, TRIANGLE, CIRCLE
+        SQUARE, TRIANGLE, CIRCLE,CUBE
     }
     private enum Actions {
         PLACESHAPE, MOVESHAPE
@@ -117,6 +120,7 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         addShape(Shapes.SQUARE, new ImageIcon(getClass().getResource("images/square.png")));
         addShape(Shapes.TRIANGLE, new ImageIcon(getClass().getResource("images/triangle.png")));
         addShape(Shapes.CIRCLE, new ImageIcon(getClass().getResource("images/circle.png")));
+        addShape(Shapes.CUBE, new ImageIcon(getClass().getResource("images/underc.png")));
         // Ajout du bouton Sauvegarder
         JButton sauvegarderButton = new JButton("Sauvegarder");
         m_toolbar.add(sauvegarderButton);
@@ -264,6 +268,14 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
                     // Ajout de l'objet dans la liste
                     shapesList.add(square);
                     simpleShapes.add(square);
+                    break;
+                case CUBE:
+                    Cube cube = new Cube(evt.getX(),evt.getY());
+                    shapesList.add(cube);
+                    simpleShapes.add(cube);
+                    Graphics2D g2d = (Graphics2D) g2;
+                    CubePanel c = new CubePanel(100, 100, 100);
+                    c.paintComponent(g2d);
                     break;
                 default:
                     System.out.println("No shape named " + m_selected);

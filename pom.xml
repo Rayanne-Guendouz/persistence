@@ -24,6 +24,11 @@
 			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>edu.uga.miage.m1</groupId>
+			<artifactId>edu.uga.singleshape</artifactId>
+			<version>1.0.0</version>
+</dependency>
 	</dependencies>
   	<build>
 		<plugins>

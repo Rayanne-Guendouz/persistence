@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.persistence;
 
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.Cube;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 
@@ -15,4 +16,6 @@ public interface Visitor {
     public void visit(Square square);
 
     public void visit(Triangle triangle);
+
+    public void visit(Cube cube);
 }

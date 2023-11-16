@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <root>
 <shapes>
+    <shape><type>cube</type><x>159</x><y>82</y></shape>
 </shapes>
 </root>
