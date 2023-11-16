@@ -21,5 +21,9 @@ public interface SimpleShape {
 
     int getY();
 
+    void setX(int x);
+     
+    void setY(int y);
+
     public abstract boolean contains(Point point);
 }

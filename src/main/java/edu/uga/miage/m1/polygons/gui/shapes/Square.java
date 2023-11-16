@@ -76,6 +76,16 @@ public class Square implements SimpleShape, Visitable {
     }
 
     @Override
+    public void setX(int x) {
+        m_x = x;
+    }
+
+    @Override
+    public void setY(int y) {
+        m_y = y;
+    }
+
+    @Override
     public boolean contains(java.awt.Point point) {
         boolean res = false ;
         if (point.getX() >= m_x && point.getX() <= m_x + 50 && point.getY() >= m_y && point.getY() <= m_y + 50) {

@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,6 +34,8 @@ import edu.uga.miage.m1.polygons.gui.shapes.Circle;
 import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This class represents the main application class, which is a JFrame subclass
@@ -85,8 +88,8 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
 
     // Liste des dernière actions de l'utilisateur
     private ArrayList<Actions> actionsList = new ArrayList<Actions>();
-
-    // Pour les déplacement des shapes
+    // Pour le déplacement de la forme
+    private ArrayList<Point> position = new ArrayList<Point>();
     private SimpleShape selectedShape;
     private boolean isShapeSelected = false;
     private int xShape;
@@ -155,32 +158,88 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         return actionsList;
     }
 
+    public ArrayList<Point> getPosition() {
+        return position;
+    }
+
+    public SimpleShape getSelectedShape() {
+        return selectedShape;
+    }
+
+    public boolean isShapeSelected() {
+        return isShapeSelected;
+    }
+
+    public ArrayList<SimpleShape> getSimpleShapes() {
+        return simpleShapes;
+    }
+
+    public Shapes getSelected() {
+        return m_selected;
+    }
+
+    public void selectShape(SimpleShape shape){
+        isShapeSelected = true;
+        selectedShape = shape;
+        //Destruction de la forme
+        int xShape = shape.getX();
+        int yShape = shape.getY();
+        position.add(new Point(xShape, yShape));
+        simpleShapes.remove(shape);
+        Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+        g2.setColor(Color.WHITE);
+        g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
+        // Redessine toutes les formes restantes
+        for (SimpleShape shape2 : simpleShapes) {
+            shape2.draw(g2);
+        }
+    }
+
+    public void moveShapeMouse(MouseEvent evt) {
+        // Mettez à jour les coordonnées de la forme en fonction de la position de la souris
+        int newX = evt.getX() - xShape;
+        int newY = evt.getY() - yShape;
+        // Dessinez la forme à la nouvelle position
+        Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+        g2.setColor(Color.WHITE);
+        g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
+        // Dessinez toutes les formes restantes
+        for (SimpleShape shape : simpleShapes) {
+            shape.draw(g2);
+        }
+        // Dessinez la forme actuellement déplacée à la nouvelle position
+        selectedShape.setX(newX);
+        selectedShape.setY(newY);
+        selectedShape.draw(g2);
+    }
+
+    public void releaseShape(MouseEvent evt) {
+        // Mettez à jour les coordonnées de la forme en fonction de la position de la souris
+        int newX = evt.getX() - xShape;
+        int newY = evt.getY() - yShape;
+        // Dessinez la forme à la nouvelle position
+        Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+        g2.setColor(Color.WHITE);
+        g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
+        // Dessinez toutes les formes restantes
+        for (SimpleShape shape : simpleShapes) {
+            shape.draw(g2);
+        }
+        // Dessinez la forme actuellement déplacée à la nouvelle position
+        selectedShape.setX(newX);
+        selectedShape.setY(newY);
+        selectedShape.draw(g2);
+        // Ajout de la forme dans la liste
+        simpleShapes.add(selectedShape);
+        isShapeSelected = false;
+    }
+
     /**
      * Implements method for the <tt>MouseListener</tt> interface to
      * draw the selected shape into the drawing canvas.
      * @param evt The associated mouse event.
      */
     public void mouseClicked(MouseEvent evt) {
-        isShapeSelected = false;
-        for (SimpleShape shape : simpleShapes) {
-            if (shape.contains(evt.getPoint())) {
-                actionsList.add(Actions.MOVESHAPE);
-                // Traitement du clic sur la forme
-                System.out.println("Clicked on shape: " + shape);
-                isShapeSelected = true;
-                selectedShape = shape;
-                //Destruction de la forme
-                shapesList.remove((Visitable) shape);
-                simpleShapes.remove(shape);
-                Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
-                g2.setColor(Color.WHITE);
-                g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
-                // Redessine toutes les formes restantes
-                for (SimpleShape shape2 : simpleShapes) {
-                    shape2.draw(g2);
-                }
-            }
-        }
         if (m_panel.contains(evt.getX(), evt.getY()) && !isShapeSelected) {
             Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
             actionsList.add(Actions.PLACESHAPE);
@@ -235,6 +294,17 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
      * @param evt The associated mouse event.
      */
     public void mousePressed(MouseEvent evt) {
+        isShapeSelected = false;
+        for (SimpleShape shape : simpleShapes) {
+            if (shape.contains(evt.getPoint())) {
+                actionsList.add(Actions.MOVESHAPE);
+                // Traitement du clic sur la forme
+                System.out.println("Clicked on shape: " + shape);
+                xShape = evt.getX() - shape.getX();
+                yShape = evt.getY() - shape.getY();
+                selectShape(shape);
+            }
+        }
     }
 
     /**
@@ -243,6 +313,9 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
      * @param evt The associated mouse event.
      */
     public void mouseReleased(MouseEvent evt) {
+        if (isShapeSelected && selectedShape != null) {
+            releaseShape(evt);
+        }
     }
 
     /**
@@ -251,7 +324,11 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
      * @param evt The associated mouse event.
      */
     public void mouseDragged(MouseEvent evt) {
+        if (isShapeSelected && selectedShape != null) {
+            moveShapeMouse(evt);
+        }
     }
+
 
     /**
      * Implements an empty method for the <tt>MouseMotionListener</tt>
