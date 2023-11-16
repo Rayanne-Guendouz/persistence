@@ -1,16 +1,17 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame,161,220,8,4,40,47,16,5,10,4
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.SauvegardeActionListener,50,58,3,1,12,14,2,2,0,2
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame,441,233,28,4,95,50,36,5,20,4
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.SauvegardeActionListener,49,62,3,1,11,13,2,2,0,2
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,GUIHelper.new WindowAdapter() {...},6,0,0,0,3,0,2,0,2,0
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,RemoteControl,24,8,2,0,7,3,4,1,3,1
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.Actions,24,0,0,0,2,0,1,0,1,0
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,App,6,0,0,0,3,0,2,0,2,0
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.Shapes,0,21,0,0,0,2,0,1,0,1
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.KeyEventController,41,6,6,0,8,1,4,1,1,1
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.Shapes,0,34,0,0,0,2,0,1,0,1
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.KeyEventController,107,6,20,0,11,1,11,1,1,1
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.ShapeActionListener,3,44,1,3,1,11,1,3,0,2
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,GUIHelper,21,0,0,0,7,0,2,0,2,0
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.persistence,JSonVisitor,0,33,0,0,0,10,0,5,0,5
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.persistence,XMLVisitor,0,33,0,0,0,10,0,5,0,5
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.commands,GoBack,10,0,0,0,5,0,2,0,2,0
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Triangle,4,145,0,2,2,22,1,5,1,4
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Square,4,84,0,0,2,15,1,4,1,4
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Circle,4,84,0,0,2,15,1,4,1,4
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Triangle,50,145,8,2,10,22,8,5,4,4
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Square,50,84,8,0,10,15,8,4,4,4
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Circle,50,84,8,0,10,15,8,4,4,4

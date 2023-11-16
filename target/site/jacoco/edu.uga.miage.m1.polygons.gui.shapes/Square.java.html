@@ -74,5 +74,24 @@ public class Square implements SimpleShape, Visitable {
     public int getY() {
 <span class="fc" id="L75">        return m_y;</span>
     }
+
+    @Override
+    public void setX(int x) {
+<span class="nc" id="L80">        m_x = x;</span>
+<span class="nc" id="L81">    }</span>
+
+    @Override
+    public void setY(int y) {
+<span class="nc" id="L85">        m_y = y;</span>
+<span class="nc" id="L86">    }</span>
+
+    @Override
+    public boolean contains(java.awt.Point point) {
+<span class="nc" id="L90">        boolean res = false ;</span>
+<span class="nc bnc" id="L91" title="All 8 branches missed.">        if (point.getX() &gt;= m_x &amp;&amp; point.getX() &lt;= m_x + 50 &amp;&amp; point.getY() &gt;= m_y &amp;&amp; point.getY() &lt;= m_y + 50) {</span>
+<span class="nc" id="L92">            res = true ;</span>
+        }
+<span class="nc" id="L94">        return res;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
