@@ -1,6 +1,7 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 /**
  * This interface defines the <tt>SimpleShape</tt> extension. This extension
@@ -19,4 +20,6 @@ public interface SimpleShape {
     int getX();
 
     int getY();
+
+    public abstract boolean contains(Point point);
 }

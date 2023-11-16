@@ -46,7 +46,9 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
 
         SQUARE, TRIANGLE, CIRCLE
     }
-
+    private enum Actions {
+        PLACESHAPE, MOVESHAPE
+    }
     private static final long serialVersionUID = 1L;
 
     private JToolBar m_toolbar;
@@ -79,7 +81,16 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
     private ArrayList<SimpleShape> simpleShapes = new ArrayList<SimpleShape>();
 
     private long lastCtrlZPressTime = 0;
-    private static final long CTRL_Z_DELAY = 500; // Délai d'attente en millisecondes (1 seconde ici)
+    private static final long CTRL_Z_DELAY = 500; // Délai d'attente en millisecondes (0.5 seconde ici)
+
+    // Liste des dernière actions de l'utilisateur
+    private ArrayList<Actions> actionsList = new ArrayList<Actions>();
+
+    // Pour les déplacement des shapes
+    private SimpleShape selectedShape;
+    private boolean isShapeSelected = false;
+    private int xShape;
+    private int yShape;
 
     public JDrawingFrame(String frameName) {
         super(frameName);
@@ -136,14 +147,43 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         repaint();
     }
 
+    public  ArrayList<Visitable> getShapesList() {
+        return shapesList;
+    }
+    
+    public ArrayList<Actions> getActionsList() {
+        return actionsList;
+    }
+
     /**
      * Implements method for the <tt>MouseListener</tt> interface to
      * draw the selected shape into the drawing canvas.
      * @param evt The associated mouse event.
      */
     public void mouseClicked(MouseEvent evt) {
-        if (m_panel.contains(evt.getX(), evt.getY())) {
+        isShapeSelected = false;
+        for (SimpleShape shape : simpleShapes) {
+            if (shape.contains(evt.getPoint())) {
+                actionsList.add(Actions.MOVESHAPE);
+                // Traitement du clic sur la forme
+                System.out.println("Clicked on shape: " + shape);
+                isShapeSelected = true;
+                selectedShape = shape;
+                //Destruction de la forme
+                shapesList.remove((Visitable) shape);
+                simpleShapes.remove(shape);
+                Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+                g2.setColor(Color.WHITE);
+                g2.fillRect(0, 0, m_panel.getWidth(), m_panel.getHeight());
+                // Redessine toutes les formes restantes
+                for (SimpleShape shape2 : simpleShapes) {
+                    shape2.draw(g2);
+                }
+            }
+        }
+        if (m_panel.contains(evt.getX(), evt.getY()) && !isShapeSelected) {
             Graphics2D g2 = (Graphics2D) m_panel.getGraphics();
+            actionsList.add(Actions.PLACESHAPE);
             switch(m_selected) {
                 case CIRCLE:
                     Circle circle = new Circle(evt.getX(), evt.getY());
@@ -170,6 +210,7 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
                     System.out.println("No shape named " + m_selected);
             }
         }
+        
     }
 
     /**
@@ -298,7 +339,12 @@ public class JDrawingFrame extends JFrame implements MouseListener, MouseMotionL
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z) {
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastCtrlZPressTime >= CTRL_Z_DELAY) {
+                if (currentTime - lastCtrlZPressTime >= CTRL_Z_DELAY && !shapesList.isEmpty() && !actionsList.isEmpty() && actionsList.get(actionsList.size()-1) == Actions.PLACESHAPE) {
+                    remoteControl.addCommand(new GoBack(JDrawingFrame.this));
+                    lastCtrlZPressTime = currentTime;
+                }
+                if(currentTime - lastCtrlZPressTime >= CTRL_Z_DELAY && !shapesList.isEmpty() && !actionsList.isEmpty() && actionsList.get(actionsList.size()-1) == Actions.MOVESHAPE) {
+                    // Ecrire la fonction qui remet à sa place la forme
                     remoteControl.addCommand(new GoBack(JDrawingFrame.this));
                     lastCtrlZPressTime = currentTime;
                 }

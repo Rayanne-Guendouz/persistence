@@ -22,6 +22,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.GeneralPath;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
@@ -81,5 +82,14 @@ public class Triangle implements SimpleShape, Visitable {
     @Override
     public int getY() {
         return m_y;
+    }
+
+    @Override
+    public boolean contains(Point point) {
+        boolean res = false ;
+        if (point.getX() >= m_x && point.getX() <= m_x + 50 && point.getY() >= m_y && point.getY() <= m_y + 50) {
+            res = true ;
+        }
+        return res;
     }
 }
