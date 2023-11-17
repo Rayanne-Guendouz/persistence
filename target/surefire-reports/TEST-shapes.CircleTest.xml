@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="shapes.CircleTest" time="0.13" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="shapes.CircleTest" time="0.067" tests="11" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Users\rguendouz\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_17.0.8.v20230831-1047\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\rguendouz\AppData\Local\Temp\surefire8358793884450177289\surefirebooter12892007382801962275.jar C:\Users\rguendouz\AppData\Local\Temp\surefire8358793884450177289 2023-11-16T16-47-09_720-jvmRun1 surefire15292205023921803257tmp surefire_03185607007885036703tmp"/>
+    <property name="sun.java.command" value="C:\Users\rguendouz\AppData\Local\Temp\surefire8950782875397005948\surefirebooter2124873404259980026.jar C:\Users\rguendouz\AppData\Local\Temp\surefire8950782875397005948 2023-11-17T20-21-34_440-jvmRun1 surefire14474881236475449375tmp surefire_09014574985697992788tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\rguendouz\Documents\cours\PC\persistence\target\test-classes;C:\Users\rguendouz\Documents\cours\PC\persistence\target\classes;C:\Users\rguendouz\.m2\repository\org\glassfish\javax.json\1.1.4\javax.json-1.1.4.jar;C:\Users\rguendouz\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.4.0\junit-jupiter-engine-5.4.0.jar;C:\Users\rguendouz\.m2\repository\org\apiguardian\apiguardian-api\1.0.0\apiguardian-api-1.0.0.jar;C:\Users\rguendouz\.m2\repository\org\junit\platform\junit-platform-engine\1.4.0\junit-platform-engine-1.4.0.jar;C:\Users\rguendouz\.m2\repository\org\opentest4j\opentest4j\1.1.1\opentest4j-1.1.1.jar;C:\Users\rguendouz\.m2\repository\org\junit\platform\junit-platform-commons\1.4.0\junit-platform-commons-1.4.0.jar;C:\Users\rguendouz\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.4.0\junit-jupiter-api-5.4.0.jar;C:\Users\rguendouz\.m2\repository\edu\uga\miage\m1\edu.uga.singleshape\1.0.0\edu.uga.singleshape-1.0.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -33,7 +33,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\rguendouz\AppData\Local\Temp\surefire8358793884450177289\surefirebooter12892007382801962275.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\rguendouz\AppData\Local\Temp\surefire8950782875397005948\surefirebooter2124873404259980026.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.8.1+1"/>
@@ -62,8 +62,14 @@
     <property name="java.class.version" value="61.0"/>
   </properties>
   <testcase name="testNegativeCoordinates" classname="shapes.CircleTest" time="0.001"/>
-  <testcase name="testExtremeCoordinates" classname="shapes.CircleTest" time="0"/>
-  <testcase name="testDraw" classname="shapes.CircleTest" time="0.115"/>
-  <testcase name="testGetX" classname="shapes.CircleTest" time="0"/>
-  <testcase name="testGetY" classname="shapes.CircleTest" time="0"/>
+  <testcase name="testTypeOfShape" classname="shapes.CircleTest" time="0.001"/>
+  <testcase name="testExtremeCoordinates" classname="shapes.CircleTest" time="0.001"/>
+  <testcase name="testDraw" classname="shapes.CircleTest" time="0.053"/>
+  <testcase name="testGetX" classname="shapes.CircleTest" time="0.001"/>
+  <testcase name="testGetY" classname="shapes.CircleTest" time="0.001"/>
+  <testcase name="testSetX" classname="shapes.CircleTest" time="0.001"/>
+  <testcase name="testSetY" classname="shapes.CircleTest" time="0.001"/>
+  <testcase name="testConstructorWithCoordinates" classname="shapes.CircleTest" time="0"/>
+  <testcase name="testContains" classname="shapes.CircleTest" time="0"/>
+  <testcase name="testConstructorWithSimpleShape" classname="shapes.CircleTest" time="0"/>
 </testsuite>

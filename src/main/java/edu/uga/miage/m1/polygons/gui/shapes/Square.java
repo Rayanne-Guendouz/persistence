@@ -33,15 +33,18 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  *
  * @author <a href="mailto:christophe.saint-marcel@univ-grenoble-alpes.fr">Christophe</a>
  */
-public class Square implements SimpleShape, Visitable, Cloneable {
+public class Square implements SimpleShape, Visitable {
 
-    int m_x;
+    int x;
 
-    int m_y;
+    int y;
 
     public Square(int x, int y) {
-        m_x = x - 25;
-        m_y = y - 25;
+        setXY(x-25, y-25);
+    }
+
+    public Square(SimpleShape shape) {
+        setXY(shape.getX(), shape.getY());
     }
 
     /**
@@ -49,15 +52,16 @@ public class Square implements SimpleShape, Visitable, Cloneable {
      * the shape.
      * @param g2 The graphics object used for painting.
      */
+    @Override
     public void draw(Graphics2D g2) {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        GradientPaint gradient = new GradientPaint(m_x, m_y, Color.BLUE, m_x + 50, m_y, Color.WHITE);
+        GradientPaint gradient = new GradientPaint(x, y, Color.BLUE, (float)x + 50, y, Color.WHITE);
         g2.setPaint(gradient);
-        g2.fill(new Rectangle2D.Double(m_x, m_y, 50, 50));
+        g2.fill(new Rectangle2D.Double(x, y, 50, 50));
         BasicStroke wideStroke = new BasicStroke(2.0f);
         g2.setColor(Color.black);
         g2.setStroke(wideStroke);
-        g2.draw(new Rectangle2D.Double(m_x, m_y, 50, 50));
+        g2.draw(new Rectangle2D.Double(x, y, 50, 50));
     }
 
     @Override
@@ -67,36 +71,41 @@ public class Square implements SimpleShape, Visitable, Cloneable {
 
     @Override
     public int getX() {
-        return m_x;
+        return x;
     }
 
     @Override
     public int getY() {
-        return m_y;
+        return y;
     }
 
     @Override
     public void setX(int x) {
-        m_x = x;
+        this.x = x;
     }
 
     @Override
     public void setY(int y) {
-        m_y = y;
+        this.y = y;
     }
 
     @Override
     public boolean contains(java.awt.Point point) {
         boolean res = false ;
-        if (point.getX() >= m_x && point.getX() <= m_x + 50 && point.getY() >= m_y && point.getY() <= m_y + 50) {
+        if (point.getX() >= x && point.getX() <= x + 50 && point.getY() >= y && point.getY() <= y + 50) {
             res = true ;
         }
         return res;
     }
 
     @Override
-    public SimpleShape clone() {
-        Square c = new Square(m_x, m_y);
-        return c;
+    public String typeOfShape() {
+        return "Square";
+    }
+
+    @Override
+    public void setXY(int x, int y) {
+        setX(x);
+        setY(y);
     }
 }

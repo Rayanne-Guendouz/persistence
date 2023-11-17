@@ -7,13 +7,15 @@ import edu.uga.singleshape.CubePanel;
 
 public class Cube implements SimpleShape, Visitable {
 
-    int m_x;
+    int x;
 
-    int m_y;
+    int y;
 
     public Cube(int x, int y) {
-        m_x = x - 25;
-        m_y = y - 25;
+        setXY(x-25, y-25);
+    }
+    public Cube(SimpleShape shape) {
+        setXY(shape.getX(), shape.getY());
     }
 
     /**
@@ -21,6 +23,7 @@ public class Cube implements SimpleShape, Visitable {
      * the shape.
      * @param g2 The graphics object used for painting.
      */
+    @Override
     public void draw(Graphics2D g2) {
         Graphics2D g2d = (Graphics2D) g2;
         CubePanel c = new CubePanel(100, 100, 100);
@@ -34,36 +37,42 @@ public class Cube implements SimpleShape, Visitable {
 
     @Override
     public int getX() {
-        return m_x;
+        return x;
     }
 
     @Override
     public int getY() {
-        return m_y;
+        return y;
     }
 
     @Override
     public void setX(int x) {
-        m_x = x;
+        this.x = x;
     }
 
     @Override
     public void setY(int y) {
-        m_y = y;
+        this.y = y;
     }
 
     @Override
     public boolean contains(java.awt.Point point) {
         boolean res = false ;
-        if (point.getX() >= m_x && point.getX() <= m_x + 50 && point.getY() >= m_y && point.getY() <= m_y + 50) {
+        if (point.getX() >= x && point.getX() <= x + 50 && point.getY() >= y && point.getY() <= y + 50) {
             res = true ;
         }
         return res;
     }
 
     @Override
-    public SimpleShape clone() {
-        return new Cube(m_x, m_y);
+    public String typeOfShape() {
+        return "Cube";
+    }
+    
+    @Override
+    public void setXY(int x, int y) {
+        setX(x);
+        setY(y);
     }
     
 }

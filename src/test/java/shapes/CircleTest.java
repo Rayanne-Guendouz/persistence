@@ -4,13 +4,45 @@ import org.junit.jupiter.api.Test;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.BasicStroke;
+
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CircleTest {
+
+    @Test
+    public void testConstructorWithCoordinates() {
+        Circle circle = new Circle(100, 150);
+        assertEquals(75, circle.getX());
+        assertEquals(125, circle.getY());
+    }
+
+    @Test
+    public void testConstructorWithSimpleShape() {
+        SimpleShape simpleShape = new Circle(200, 250);
+        Circle circle = new Circle(simpleShape);
+        assertEquals(175, circle.getX());
+        assertEquals(225, circle.getY());
+    }
+
+    @Test
+    public void testContains() {
+        Circle circle = new Circle(50, 50);
+        assertTrue(circle.contains(new Point(60, 60)));
+        assertFalse(circle.contains(new Point(10, 10)));
+    }
+
+    @Test
+    public void testTypeOfShape() {
+        Circle circle = new Circle(50, 50);
+        assertEquals("Circle", circle.typeOfShape());
+    }
 
     @Test
     public void testDraw() {
@@ -61,7 +93,21 @@ public class CircleTest {
         assertEquals(expectedY, actualY);
     }
 
-     @Test
+    @Test
+    public void testSetX() {
+        Circle circle = new Circle(25, 30);
+        circle.setX(10);
+        assertEquals(10, circle.getX());
+    }
+
+    @Test
+    public void testSetY() {
+        Circle circle = new Circle(25, 30);
+        circle.setY(10);
+        assertEquals(10, circle.getY());
+    }
+
+    @Test
     public void testExtremeCoordinates() {
         Circle circle = new Circle(Integer.MAX_VALUE, Integer.MAX_VALUE);
         assertTrue(circle.getX() > 0);

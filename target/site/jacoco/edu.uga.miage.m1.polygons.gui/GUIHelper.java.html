@@ -11,14 +11,15 @@ import java.awt.event.WindowEvent;
 	public static void showOnFrame(String frameName) {
 <span class="nc" id="L12">		JDrawingFrame frame = new JDrawingFrame(frameName);</span>
 <span class="nc" id="L13">		WindowAdapter wa = new WindowAdapter() {</span>
+			@Override
 			public void windowClosing(WindowEvent e) {
-<span class="nc" id="L15">				System.exit(0);</span>
-<span class="nc" id="L16">			}</span>
+<span class="nc" id="L16">				System.exit(0);</span>
+<span class="nc" id="L17">			}</span>
 		};
-<span class="nc" id="L18">		frame.addWindowListener(wa);</span>
-<span class="nc" id="L19">		frame.pack();</span>
-<span class="nc" id="L20">		frame.setVisible(true);</span>
-<span class="nc" id="L21">	}</span>
+<span class="nc" id="L19">		frame.addWindowListener(wa);</span>
+<span class="nc" id="L20">		frame.pack();</span>
+<span class="nc" id="L21">		frame.setVisible(true);</span>
+<span class="nc" id="L22">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

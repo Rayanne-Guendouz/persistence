@@ -15,27 +15,30 @@ public class JSonVisitor implements Visitor {
     private static final String ENDJSON = &quot;}&quot;;
 
 <span class="fc" id="L17">    public JSonVisitor() {</span>
-<span class="fc" id="L18">    }</span>
+        // Nothing to do
+        // Don't remove this method even if it is empty
+        // Don't use for this moment
+<span class="fc" id="L21">    }</span>
 
     @Override
     public void visit(Circle circle) {
-<span class="fc" id="L22">    	representation = &quot;{\&quot;type\&quot;: \&quot;circle\&quot;, \&quot;x\&quot;: &quot; + circle.getX() + MIDJSON + circle.getY() + ENDJSON;</span>
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L25">    	representation = &quot;{\&quot;type\&quot;: \&quot;circle\&quot;, \&quot;x\&quot;: &quot; + circle.getX() + MIDJSON + circle.getY() + ENDJSON;</span>
+<span class="fc" id="L26">    }</span>
 
     @Override
     public void visit(Square square) {
-<span class="fc" id="L27">    	representation = &quot;{\&quot;type\&quot;: \&quot;square\&quot;, \&quot;x\&quot;: &quot; + square.getX() + MIDJSON + square.getY() + ENDJSON;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L30">    	representation = &quot;{\&quot;type\&quot;: \&quot;square\&quot;, \&quot;x\&quot;: &quot; + square.getX() + MIDJSON + square.getY() + ENDJSON;</span>
+<span class="fc" id="L31">    }</span>
 
     @Override
     public void visit(Triangle triangle) {
-<span class="fc" id="L32">    	representation = &quot;{\&quot;type\&quot;: \&quot;triangle\&quot;, \&quot;x\&quot;: &quot; + triangle.getX() + MIDJSON + triangle.getY() + ENDJSON;</span>
-<span class="fc" id="L33">    }</span>
+<span class="fc" id="L35">    	representation = &quot;{\&quot;type\&quot;: \&quot;triangle\&quot;, \&quot;x\&quot;: &quot; + triangle.getX() + MIDJSON + triangle.getY() + ENDJSON;</span>
+<span class="fc" id="L36">    }</span>
 
     @Override
     public void visit(Cube cube) {
-<span class="nc" id="L37">    	representation = &quot;{\&quot;type\&quot;: \&quot;cube\&quot;, \&quot;x\&quot;: &quot; + cube.getX() + MIDJSON + cube.getY() + ENDJSON;</span>
-<span class="nc" id="L38">    }</span>
+<span class="nc" id="L40">    	representation = &quot;{\&quot;type\&quot;: \&quot;cube\&quot;, \&quot;x\&quot;: &quot; + cube.getX() + MIDJSON + cube.getY() + ENDJSON;</span>
+<span class="nc" id="L41">    }</span>
 
     /**
      * @return the representation in JSon example for a Circle
@@ -53,7 +56,7 @@ public class JSonVisitor implements Visitor {
      *         &lt;/pre&gt;
      */
     public String getRepresentation() {
-<span class="fc" id="L56">        return representation;</span>
+<span class="fc" id="L59">        return representation;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

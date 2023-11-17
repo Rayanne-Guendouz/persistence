@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<root>
-<shapes>
-    <shape><type>square</type><x>102</x><y>15</y></shape>
-    <shape><type>square</type><x>238</x><y>93</y></shape>
-    <shape><type>square</type><x>57</x><y>184</y></shape>
-</shapes>
-</root>

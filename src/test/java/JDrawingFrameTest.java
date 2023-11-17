@@ -3,64 +3,72 @@ import org.junit.jupiter.api.Test;
 
 import edu.uga.miage.m1.polygons.gui.JDrawingFrame;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import javax.swing.ImageIcon;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class JDrawingFrameTest {
 
     private JDrawingFrame drawingFrame;
 
     @BeforeEach
-    public void setUp() {
-        drawingFrame = new JDrawingFrame("Test Frame");
+    void setUp() {
+        drawingFrame = new JDrawingFrame("TestFrame");
     }
 
     @Test
-    public void testAddShape() {
-        // Test adding a shape to the toolbar
-        drawingFrame.addShape(JDrawingFrame.Shapes.SQUARE, new ImageIcon());
-        // Ensure the shape is added to the toolbar
-        assertNotNull(drawingFrame.m_buttons.get(JDrawingFrame.Shapes.SQUARE));
+    void testMouseReleased() {
+        // Add a shape to the drawing frame
+        drawingFrame.addShape(JDrawingFrame.Shapes.SQUARE, null);
+
+        // Simulate a mouse press event
+        MouseEvent pressEvent = new MouseEvent(drawingFrame.getPanel(), MouseEvent.MOUSE_PRESSED,
+                System.currentTimeMillis(), 0, 50, 50, 1, false);
+        drawingFrame.mousePressed(pressEvent);
+
+        // Simulate a mouse release event
+        MouseEvent releaseEvent = new MouseEvent(drawingFrame.getPanel(), MouseEvent.MOUSE_RELEASED,
+                System.currentTimeMillis(), 0, 60, 60, 1, false);
+        drawingFrame.mouseReleased(releaseEvent);
+
+        // Check if the shape is no longer selected
+        assertFalse(drawingFrame.isShapeSelected());
+        assertNull(drawingFrame.getSelectedShape());
     }
 
+
+
     @Test
-    public void testMouseClicked() {
+    void testSave() {
+        // Add a shape to the drawing frame
+        drawingFrame.addShape(JDrawingFrame.Shapes.SQUARE, null);
+
         // Simulate a mouse click event
-        MouseEvent event = new MouseEvent(drawingFrame.m_panel, MouseEvent.MOUSE_CLICKED, System.currentTimeMillis(), 0, 50, 50, 1, false);
-        drawingFrame.mouseClicked(event);
+        MouseEvent mouseEvent = new MouseEvent(drawingFrame.getPanel(), MouseEvent.MOUSE_CLICKED,
+                System.currentTimeMillis(), 0, 50, 50, 1, false);
+        drawingFrame.mouseClicked(mouseEvent);
 
-        // Test if a shape has been added to the shapes list
-        // assertTrue(drawingFrame.shapesList.isEmpty());
-    }
+        // Save the current state
+        drawingFrame.save();
 
-    @Test
-    public void testSauvegardeActionListener() {
-        // Simulate a "Sauvegarder" button click
-        ActionEvent event = new ActionEvent(drawingFrame, ActionEvent.ACTION_PERFORMED, "Sauvegarder");
-        drawingFrame.new SauvegardeActionListener().actionPerformed(event);
+        // Check if the save file exists
+        Path jsonFilePath = Paths.get("src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.json");
+        Path xmlFilePath = Paths.get("src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.xml");
 
-        // Test if the save files (JSON and XML) have been created
-        File jsonFile = new File("src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.json");
-        File xmlFile = new File("src/main/java/edu/uga/miage/m1/polygons/gui/save/Save.xml");
-        assertTrue(jsonFile.exists());
-        assertTrue(xmlFile.exists());
-    }
+        assertTrue(Files.exists(jsonFilePath));
+        assertTrue(Files.exists(xmlFilePath));
 
-    @Test
-    public void testGoBack() {
-        // Simulate adding a shape and then going back
-        MouseEvent event = new MouseEvent(drawingFrame.m_panel, MouseEvent.MOUSE_CLICKED, System.currentTimeMillis(), 0, 50, 50, 1, false);
-        drawingFrame.mouseClicked(event);
-        // int initialShapesCount = drawingFrame.shapesList.size();
-
-        drawingFrame.goBack();
-
-        // Ensure the last shape has been removed
-        // assertEquals(initialShapesCount, drawingFrame.shapesList.size());
+        // Clean up: delete the save files
+        try {
+            Files.deleteIfExists(jsonFilePath);
+            Files.deleteIfExists(xmlFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

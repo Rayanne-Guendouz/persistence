@@ -15,6 +15,9 @@ public class JSonVisitor implements Visitor {
     private static final String ENDJSON = "}";
 
     public JSonVisitor() {
+        // Nothing to do
+        // Don't remove this method even if it is empty
+        // Don't use for this moment
     }
 
     @Override
