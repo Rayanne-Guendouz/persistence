@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: shapes.SquareTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s - in shapes.SquareTest
+=======
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.012 s - in shapes.SquareTest
+>>>>>>> 9e42618 (composable 1er version)

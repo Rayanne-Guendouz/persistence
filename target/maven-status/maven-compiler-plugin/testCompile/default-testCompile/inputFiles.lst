@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\shapes\CubeTest.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\shapes\SquareTest.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\persistence\JSonVisitorTest.java
@@ -6,3 +7,11 @@ C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\shapes\TriangleT
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\JDrawingFrameTest.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\persistence\XMLVisitorTest.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\test\java\shapes\CircleTest.java
+=======
+/home/bastien/M1MIAGE/TP PC/persistence/src/test/java/shapes/CircleTest.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/test/java/persistence/JSonVisitorTest.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/test/java/JDrawingFrameTest.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/test/java/persistence/XMLVisitorTest.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/test/java/shapes/TriangleTest.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/test/java/shapes/SquareTest.java
+>>>>>>> 9e42618 (composable 1er version)

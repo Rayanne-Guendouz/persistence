@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JSonVisitor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Persistence_g1_8</a> &gt; <a href="index.source.html" class="el_package">edu.uga.miage.m1.polygons.gui.persistence</a> &gt; <span class="el_source">JSonVisitor.java</span></div><h1>JSonVisitor.java</h1><pre class="source lang-java linenums">package edu.uga.miage.m1.polygons.gui.persistence;
 
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.ComplexShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Cube;
+import edu.uga.miage.m1.polygons.gui.shapes.SimpleShapeBis;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 
@@ -10,10 +12,14 @@ import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
  */
 public class JSonVisitor implements Visitor {
 
-<span class="fc" id="L13">    private String representation = null;</span>
+    private StringBuilder representation;
     private static final String MIDJSON = &quot;, \&quot;y\&quot;: &quot;;
     private static final String ENDJSON = &quot;}&quot;;
+    private static final String START_SHAPE = &quot;{\&quot;type\&quot;: \&quot;%s\&quot;, \&quot;x\&quot;: %d&quot; + MIDJSON + &quot;%d&quot; + ENDJSON;
+    private static final String START_COMPLEX = &quot;{\&quot;type\&quot;: \&quot;complex\&quot;, \&quot;shapes\&quot;: [&quot;;
+    private static final String END_COMPLEX = &quot;]}&quot;;
 
+<<<<<<< HEAD
 <span class="fc" id="L17">    public JSonVisitor() {</span>
         // Nothing to do
         // Don't remove this method even if it is empty
@@ -39,11 +45,53 @@ public class JSonVisitor implements Visitor {
     public void visit(Cube cube) {
 <span class="nc" id="L40">    	representation = &quot;{\&quot;type\&quot;: \&quot;cube\&quot;, \&quot;x\&quot;: &quot; + cube.getX() + MIDJSON + cube.getY() + ENDJSON;</span>
 <span class="nc" id="L41">    }</span>
+=======
+<span class="fc" id="L22">    public JSonVisitor() {</span>
+<span class="fc" id="L23">        representation = new StringBuilder();</span>
+<span class="fc" id="L24">    }</span>
+
+    @Override
+    public void visit(Circle circle) {
+<span class="fc" id="L28">        appendRepresentation(String.format(START_SHAPE, &quot;circle&quot;, circle.getX(), circle.getY()));</span>
+<span class="fc" id="L29">    }</span>
+
+    @Override
+    public void visit(Square square) {
+<span class="fc" id="L33">        appendRepresentation(String.format(START_SHAPE, &quot;square&quot;, square.getX(), square.getY()));</span>
+<span class="fc" id="L34">    }</span>
+
+    @Override
+    public void visit(Triangle triangle) {
+<span class="fc" id="L38">        appendRepresentation(String.format(START_SHAPE, &quot;triangle&quot;, triangle.getX(), triangle.getY()));</span>
+<span class="fc" id="L39">    }</span>
+
+    @Override
+    public void visit(Cube cube) {
+<span class="nc" id="L43">        appendRepresentation(String.format(START_SHAPE, &quot;cube&quot;, cube.getX(), cube.getY()));</span>
+<span class="nc" id="L44">    }</span>
+
+    @Override
+    public void visit(ComplexShape complexShape) {
+<span class="nc" id="L48">        appendRepresentation(START_COMPLEX);</span>
+<span class="nc" id="L49">        SimpleShapeBis[] shapes = complexShape.getShapes();</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        for (int i = 0; i &lt; shapes.length; i++) {</span>
+<span class="nc" id="L51">            shapes[i].accept(this);</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">            if (i &lt; shapes.length - 1) {</span>
+<span class="nc" id="L53">                appendRepresentation(&quot;, &quot;);</span>
+            }
+        }
+<span class="nc" id="L56">        appendRepresentation(END_COMPLEX);</span>
+<span class="nc" id="L57">    }</span>
+
+    private void appendRepresentation(String str) {
+<span class="fc" id="L60">        representation.append(str);</span>
+<span class="fc" id="L61">    }</span>
+>>>>>>> 9e42618 (composable 1er version)
 
     /**
-     * @return the representation in JSon example for a Circle
+     * @return the representation in JSON example for a Circle
      *
-     *         &lt;pre&gt;
+     * &lt;pre&gt;
      * {@code
      *  {
      *     &quot;shape&quot;: {
@@ -53,10 +101,14 @@ public class JSonVisitor implements Visitor {
      *     }
      *  }
      * }
-     *         &lt;/pre&gt;
+     * &lt;/pre&gt;
      */
     public String getRepresentation() {
+<<<<<<< HEAD
 <span class="fc" id="L59">        return representation;</span>
+=======
+<span class="fc" id="L79">        return representation.toString();</span>
+>>>>>>> 9e42618 (composable 1er version)
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

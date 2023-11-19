@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: shapes.TriangleTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s - in shapes.TriangleTest
+=======
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.086 s - in shapes.TriangleTest
+>>>>>>> 9e42618 (composable 1er version)

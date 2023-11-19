@@ -28,7 +28,7 @@ import java.awt.geom.Ellipse2D;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 
-public class Circle implements SimpleShape, Visitable {
+public class Circle implements SimpleShape, SimpleShapeBis, Visitable {
 
     int x;
 
@@ -94,6 +94,7 @@ public class Circle implements SimpleShape, Visitable {
     }
 
     @Override
+<<<<<<< HEAD
     public String typeOfShape() {
 <span class="fc" id="L98">        return &quot;Circle&quot;;</span>
     }
@@ -104,5 +105,17 @@ public class Circle implements SimpleShape, Visitable {
 <span class="fc" id="L104">        setY(y);</span>
 <span class="fc" id="L105">    }</span>
     
+=======
+    public SimpleShape clone() {
+<span class="nc" id="L90">        Circle c = new Circle(m_x, m_y);</span>
+<span class="nc" id="L91">        return c;</span>
+    }
+
+    @Override
+    public void move(int x, int y) {
+        // TODO Auto-generated method stub
+<span class="nc" id="L97">        throw new UnsupportedOperationException(&quot;Unimplemented method 'move'&quot;);</span>
+    }
+>>>>>>> 9e42618 (composable 1er version)
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

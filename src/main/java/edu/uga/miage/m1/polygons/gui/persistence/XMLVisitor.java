@@ -1,7 +1,9 @@
 package edu.uga.miage.m1.polygons.gui.persistence;
 
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.ComplexShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Cube;
+import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 
@@ -10,42 +12,59 @@ import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
  */
 public class XMLVisitor implements Visitor {
 
-    private String representation = null;
-    private static final String MIDXML = "</x><y>";
-    private static final String ENDXML = "</y></shape>";
-    
+    private StringBuilder representation;
+    private static final String START_SHAPE = "<shape><type>%s</type><x>%d</x><y>%d</y></shape>";
+    private static final String START_COMPLEX = "<shape><type>complex</type><x>%d</x><y>%d</y><shapes>";
+    private static final String END_COMPLEX = "</shapes></shape>";
 
     public XMLVisitor() {
+<<<<<<< HEAD
         // Nothing to do
         // Don't remove this method even if it is empty
         // Don't use for this moment
+=======
+        representation = new StringBuilder();
+>>>>>>> 9e42618 (composable 1er version)
     }
 
     @Override
     public void visit(Circle circle) {
-    	representation = "<shape><type>circle</type><x>" + circle.getX() + MIDXML + circle.getY() + ENDXML;
+        appendRepresentation(String.format(START_SHAPE, "circle", circle.getX(), circle.getY()));
     }
 
     @Override
     public void visit(Square square) {
-    	representation = "<shape><type>square</type><x>" + square.getX() + MIDXML + square.getY() + ENDXML;
+        appendRepresentation(String.format(START_SHAPE, "square", square.getX(), square.getY()));
     }
 
     @Override
     public void visit(Triangle triangle) {
-    	representation = "<shape><type>triangle</type><x>" + triangle.getX() + MIDXML + triangle.getY() + ENDXML;
+        appendRepresentation(String.format(START_SHAPE, "triangle", triangle.getX(), triangle.getY()));
     }
 
-     @Override
+    @Override
     public void visit(Cube cube) {
-    	representation = "<shape><type>cube</type><x>" + cube.getX() + MIDXML + cube.getY() + ENDXML;
+        appendRepresentation(String.format(START_SHAPE, "cube", cube.getX(), cube.getY()));
     }
 
+    @Override
+    public void visit(ComplexShape complexShape) {
+        appendRepresentation(String.format(START_COMPLEX));
+        SimpleShape[] shapes = complexShape.getShapes();
+        for (SimpleShape shape : shapes) {
+            shape.accept(this);
+        }
+        appendRepresentation(END_COMPLEX);
+    }
+
+    private void appendRepresentation(String str) {
+        representation.append(str);
+    }
 
     /**
-     * @return the representation in JSon example for a Triangle:
+     * @return the representation in XML for a Triangle:
      *
-     *         <pre>
+     * <pre>
      * {@code
      *  <shape>
      *    <type>triangle</type>
@@ -56,6 +75,6 @@ public class XMLVisitor implements Visitor {
      * </pre>
      */
     public String getRepresentation() {
-        return representation;
+        return representation.toString();
     }
 }

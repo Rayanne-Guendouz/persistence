@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.Serializable;
 
+import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
+
 /**
  * This interface defines the <tt>SimpleShape</tt> extension. This extension
  * is used to draw shapes.
@@ -22,6 +24,8 @@ public interface SimpleShape extends Serializable {
 
     void draw(Graphics2D g2);
 
+    void move(int x, int y);
+
     int getX();
 
     int getY();
@@ -30,11 +34,19 @@ public interface SimpleShape extends Serializable {
      
     void setY(int y);
 
+    void accept(Visitor visitor);
+
+    boolean isSelected();
+
+    void setSelected(boolean selected);
+
     public abstract boolean contains(Point point);
 
     public abstract String typeOfShape();
 
     public abstract void setXY(int x, int y);
+
+    
 
     
 }

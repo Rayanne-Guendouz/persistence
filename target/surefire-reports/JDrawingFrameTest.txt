@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: JDrawingFrameTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.483 s - in JDrawingFrameTest
+=======
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.498 s - in JDrawingFrameTest
+>>>>>>> 9e42618 (composable 1er version)

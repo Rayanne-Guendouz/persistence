@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1\polygons\gui\commands\Command.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1\polygons\gui\commands\GoBack.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1\polygons\gui\shapes\Circle.java
@@ -14,3 +15,22 @@ C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1\polygons\gui\shapes\Cube.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1\polygons\gui\JDrawingFrame.java
 C:\Users\rguendouz\Documents\cours\PC\persistence\src\main\java\edu\uga\miage\m1\polygons\gui\shapes\Square.java
+=======
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/RemoteControl.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/SimpleShapeBis.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/GUIHelper.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/commands/Command.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/App.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/persistence/Visitable.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/Circle.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/Triangle.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/Square.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/persistence/JSonVisitor.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/JDrawingFrame.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/commands/GoBack.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/persistence/Visitor.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/Cube.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/SimpleShape.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/shapes/ComplexShape.java
+/home/bastien/M1MIAGE/TP PC/persistence/src/main/java/edu/uga/miage/m1/polygons/gui/persistence/XMLVisitor.java
+>>>>>>> 9e42618 (composable 1er version)

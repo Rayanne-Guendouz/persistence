@@ -34,7 +34,11 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  *
  * @author &lt;a href=&quot;mailto:christophe.saint-marcel@univ-grenoble-alpes.fr&quot;&gt;Christophe&lt;/a&gt;
  */
+<<<<<<< HEAD
 public class Triangle implements SimpleShape, Visitable{
+=======
+public class Triangle implements SimpleShape, SimpleShapeBis, Visitable, Cloneable {
+>>>>>>> 9e42618 (composable 1er version)
 
     int x;
 
@@ -108,6 +112,7 @@ public class Triangle implements SimpleShape, Visitable{
     }
 
     @Override
+<<<<<<< HEAD
     public String typeOfShape() {
 <span class="fc" id="L112">        return &quot;Triangle&quot;;</span>
     }
@@ -117,5 +122,17 @@ public class Triangle implements SimpleShape, Visitable{
 <span class="fc" id="L117">        setX(x);</span>
 <span class="fc" id="L118">        setY(y);</span>
 <span class="fc" id="L119">    }</span>
+=======
+    public SimpleShape clone() {
+<span class="nc" id="L108">        Triangle t = new Triangle(m_x, m_y);</span>
+<span class="nc" id="L109">        return t;</span>
+    }
+
+    @Override
+    public void move(int x, int y) {
+        // TODO Auto-generated method stub
+<span class="nc" id="L115">        throw new UnsupportedOperationException(&quot;Unimplemented method 'move'&quot;);</span>
+    }
+>>>>>>> 9e42618 (composable 1er version)
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

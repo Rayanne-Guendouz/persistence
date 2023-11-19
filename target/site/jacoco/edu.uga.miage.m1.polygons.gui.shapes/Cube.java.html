@@ -5,18 +5,25 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 import edu.uga.singleshape.CubePanel;
 
-public class Cube implements SimpleShape, Visitable {
+public class Cube implements SimpleShape, SimpleShapeBis, Visitable {
 
     int x;
 
     int y;
 
+<<<<<<< HEAD
 <span class="fc" id="L14">    public Cube(int x, int y) {</span>
 <span class="fc" id="L15">        setXY(x-25, y-25);</span>
 <span class="fc" id="L16">    }</span>
 <span class="fc" id="L17">    public Cube(SimpleShape shape) {</span>
 <span class="fc" id="L18">        setXY(shape.getX(), shape.getY());</span>
 <span class="fc" id="L19">    }</span>
+=======
+<span class="nc" id="L14">    public Cube(int x, int y) {</span>
+<span class="nc" id="L15">        m_x = x - 25;</span>
+<span class="nc" id="L16">        m_y = y - 25;</span>
+<span class="nc" id="L17">    }</span>
+>>>>>>> 9e42618 (composable 1er version)
 
     /**
      * Implements the &lt;tt&gt;SimpleShape.draw()&lt;/tt&gt; method for painting
@@ -25,6 +32,7 @@ public class Cube implements SimpleShape, Visitable {
      */
     @Override
     public void draw(Graphics2D g2) {
+<<<<<<< HEAD
 <span class="fc" id="L28">        Graphics2D g2d = (Graphics2D) g2;</span>
 <span class="fc" id="L29">        CubePanel c = new CubePanel(100, 100, 100);</span>
 <span class="fc" id="L30">        c.paintComponent(g2d);</span>
@@ -38,15 +46,35 @@ public class Cube implements SimpleShape, Visitable {
     @Override
     public int getX() {
 <span class="fc" id="L40">        return x;</span>
+=======
+<span class="nc" id="L25">        Graphics2D g2d = (Graphics2D) g2;</span>
+<span class="nc" id="L26">        CubePanel c = new CubePanel(100, 100, 100);</span>
+<span class="nc" id="L27">        c.paintComponent(g2d);</span>
+<span class="nc" id="L28">    }</span>
+
+    @Override
+    public void accept(Visitor visitor) {
+<span class="nc" id="L32">        visitor.visit(this);</span>
+<span class="nc" id="L33">    }</span>
+
+    @Override
+    public int getX() {
+<span class="nc" id="L37">        return m_x;</span>
+>>>>>>> 9e42618 (composable 1er version)
     }
 
     @Override
     public int getY() {
+<<<<<<< HEAD
 <span class="fc" id="L45">        return y;</span>
+=======
+<span class="nc" id="L42">        return m_y;</span>
+>>>>>>> 9e42618 (composable 1er version)
     }
 
     @Override
     public void setX(int x) {
+<<<<<<< HEAD
 <span class="fc" id="L50">        this.x = x;</span>
 <span class="fc" id="L51">    }</span>
 
@@ -62,6 +90,34 @@ public class Cube implements SimpleShape, Visitable {
 <span class="fc" id="L62">            res = true ;</span>
         }
 <span class="fc" id="L64">        return res;</span>
+=======
+<span class="nc" id="L47">        m_x = x;</span>
+<span class="nc" id="L48">    }</span>
+
+    @Override
+    public void setY(int y) {
+<span class="nc" id="L52">        m_y = y;</span>
+<span class="nc" id="L53">    }</span>
+
+    @Override
+    public boolean contains(java.awt.Point point) {
+<span class="nc" id="L57">        boolean res = false ;</span>
+<span class="nc bnc" id="L58" title="All 8 branches missed.">        if (point.getX() &gt;= m_x &amp;&amp; point.getX() &lt;= m_x + 50 &amp;&amp; point.getY() &gt;= m_y &amp;&amp; point.getY() &lt;= m_y + 50) {</span>
+<span class="nc" id="L59">            res = true ;</span>
+        }
+<span class="nc" id="L61">        return res;</span>
+    }
+
+    @Override
+    public SimpleShape clone() {
+<span class="nc" id="L66">        return new Cube(m_x, m_y);</span>
+    }
+
+    @Override
+    public void move(int x, int y) {
+        // TODO Auto-generated method stub
+<span class="nc" id="L72">        throw new UnsupportedOperationException(&quot;Unimplemented method 'move'&quot;);</span>
+>>>>>>> 9e42618 (composable 1er version)
     }
 
     @Override

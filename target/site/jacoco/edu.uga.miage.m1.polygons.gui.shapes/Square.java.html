@@ -33,7 +33,7 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  *
  * @author &lt;a href=&quot;mailto:christophe.saint-marcel@univ-grenoble-alpes.fr&quot;&gt;Christophe&lt;/a&gt;
  */
-public class Square implements SimpleShape, Visitable {
+public class Square implements SimpleShape, SimpleShapeBis, Visitable, Cloneable {
 
     int x;
 
@@ -99,6 +99,7 @@ public class Square implements SimpleShape, Visitable {
     }
 
     @Override
+<<<<<<< HEAD
     public String typeOfShape() {
 <span class="fc" id="L103">        return &quot;Square&quot;;</span>
     }
@@ -108,5 +109,17 @@ public class Square implements SimpleShape, Visitable {
 <span class="fc" id="L108">        setX(x);</span>
 <span class="fc" id="L109">        setY(y);</span>
 <span class="fc" id="L110">    }</span>
+=======
+    public SimpleShape clone() {
+<span class="nc" id="L99">        Square c = new Square(m_x, m_y);</span>
+<span class="nc" id="L100">        return c;</span>
+    }
+
+    @Override
+    public void move(int x, int y) {
+        // TODO Auto-generated method stub
+<span class="nc" id="L106">        throw new UnsupportedOperationException(&quot;Unimplemented method 'move'&quot;);</span>
+    }
+>>>>>>> 9e42618 (composable 1er version)
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

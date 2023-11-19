@@ -28,18 +28,26 @@ import java.awt.geom.Ellipse2D;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 
-public class Circle implements SimpleShape, Visitable {
+public class Circle implements SimpleShape, Visitable, Cloneable {
+
+    boolean isSelected;
 
     int x;
 
     int y;
 
     public Circle(int x, int y) {
+<<<<<<< HEAD
         setXY(x-25, y-25);
     }
 
     public Circle(SimpleShape shape) {
         setXY(shape.getX(), shape.getY());
+=======
+        m_x = x - 25;
+        m_y = y - 25;
+        isSelected = false;
+>>>>>>> 9e42618 (composable 1er version)
     }
 
     /**
@@ -54,9 +62,23 @@ public class Circle implements SimpleShape, Visitable {
         g2.setPaint(gradient);
         g2.fill(new Ellipse2D.Double(x, y, 50, 50));
         BasicStroke wideStroke = new BasicStroke(2.0f);
-        g2.setColor(Color.black);
+        if(isSelected){
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.black);
+        }
         g2.setStroke(wideStroke);
         g2.draw(new Ellipse2D.Double(x, y, 50, 50));
+    }
+
+    @Override
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
     @Override
@@ -99,9 +121,17 @@ public class Circle implements SimpleShape, Visitable {
     }
 
     @Override
+<<<<<<< HEAD
     public void setXY(int x, int y) {
         setX(x);
         setY(y);
     }
     
+=======
+    public void move(int x, int y) {
+        m_x = x - 25;
+        m_y = y - 25;
+    }
+
+>>>>>>> 9e42618 (composable 1er version)
 }

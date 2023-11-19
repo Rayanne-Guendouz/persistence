@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: shapes.CircleTest
 -------------------------------------------------------------------------------
+<<<<<<< HEAD
 Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.067 s - in shapes.CircleTest
+=======
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s - in shapes.CircleTest
+>>>>>>> 9e42618 (composable 1er version)

@@ -36,7 +36,13 @@ import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
  */
 public class Triangle implements SimpleShape, Visitable{
 
+<<<<<<< HEAD
     int x;
+=======
+    boolean isSelected = false; 
+
+    int m_x;
+>>>>>>> 9e42618 (composable 1er version)
 
     int y;
 
@@ -68,32 +74,48 @@ public class Triangle implements SimpleShape, Visitable{
         polygon.closePath();
         g2.fill(polygon);
         BasicStroke wideStroke = new BasicStroke(2.0f);
-        g2.setColor(Color.black);
+        if(isSelected){
+            g2.setColor(Color.magenta);
+
+        } else {
+            g2.setColor(Color.black);
+        }
         g2.setStroke(wideStroke);
         g2.draw(polygon);
     }
+
+    @Override
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+    
 
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
 
-    @Override
+ 
     public int getX() {
         return x;
     }
 
-    @Override
+
     public int getY() {
         return y;
     }
 
-    @Override
+
     public void setX(int x) {
         this.x = x;
     }
 
-    @Override
+
     public void setY(int y) {
         this.y = y;
     }
@@ -117,4 +139,12 @@ public class Triangle implements SimpleShape, Visitable{
         setX(x);
         setY(y);
     }
+
+    @Override
+    public void move(int x, int y) {
+        m_x = x - 25;
+        m_y = y - 25;
+    }
+
+ 
 }

@@ -1,7 +1,9 @@
 package edu.uga.miage.m1.polygons.gui.persistence;
 
 import edu.uga.miage.m1.polygons.gui.shapes.Circle;
+import edu.uga.miage.m1.polygons.gui.shapes.ComplexShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Cube;
+import edu.uga.miage.m1.polygons.gui.shapes.SimpleShape;
 import edu.uga.miage.m1.polygons.gui.shapes.Square;
 import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
 
@@ -10,40 +12,64 @@ import edu.uga.miage.m1.polygons.gui.shapes.Triangle;
  */
 public class JSonVisitor implements Visitor {
 
-    private String representation = null;
+    private StringBuilder representation;
     private static final String MIDJSON = ", \"y\": ";
     private static final String ENDJSON = "}";
+    private static final String START_SHAPE = "{\"type\": \"%s\", \"x\": %d" + MIDJSON + "%d" + ENDJSON;
+    private static final String START_COMPLEX = "{\"type\": \"complex\", \"shapes\": [";
+    private static final String END_COMPLEX = "]}";
 
     public JSonVisitor() {
+<<<<<<< HEAD
         // Nothing to do
         // Don't remove this method even if it is empty
         // Don't use for this moment
+=======
+        representation = new StringBuilder();
+>>>>>>> 9e42618 (composable 1er version)
     }
 
     @Override
     public void visit(Circle circle) {
-    	representation = "{\"type\": \"circle\", \"x\": " + circle.getX() + MIDJSON + circle.getY() + ENDJSON;
+        appendRepresentation(String.format(START_SHAPE, "circle", circle.getX(), circle.getY()));
     }
 
     @Override
     public void visit(Square square) {
-    	representation = "{\"type\": \"square\", \"x\": " + square.getX() + MIDJSON + square.getY() + ENDJSON;
+        appendRepresentation(String.format(START_SHAPE, "square", square.getX(), square.getY()));
     }
 
     @Override
     public void visit(Triangle triangle) {
-    	representation = "{\"type\": \"triangle\", \"x\": " + triangle.getX() + MIDJSON + triangle.getY() + ENDJSON;
+        appendRepresentation(String.format(START_SHAPE, "triangle", triangle.getX(), triangle.getY()));
     }
 
     @Override
     public void visit(Cube cube) {
-    	representation = "{\"type\": \"cube\", \"x\": " + cube.getX() + MIDJSON + cube.getY() + ENDJSON;
+        appendRepresentation(String.format(START_SHAPE, "cube", cube.getX(), cube.getY()));
+    }
+
+    @Override
+    public void visit(ComplexShape complexShape) {
+        appendRepresentation(START_COMPLEX);
+        SimpleShape[] shapes = complexShape.getShapes();
+        for (int i = 0; i < shapes.length; i++) {
+            shapes[i].accept(this);
+            if (i < shapes.length - 1) {
+                appendRepresentation(", ");
+            }
+        }
+        appendRepresentation(END_COMPLEX);
+    }
+
+    private void appendRepresentation(String str) {
+        representation.append(str);
     }
 
     /**
-     * @return the representation in JSon example for a Circle
+     * @return the representation in JSON example for a Circle
      *
-     *         <pre>
+     * <pre>
      * {@code
      *  {
      *     "shape": {
@@ -53,9 +79,9 @@ public class JSonVisitor implements Visitor {
      *     }
      *  }
      * }
-     *         </pre>
+     * </pre>
      */
     public String getRepresentation() {
-        return representation;
+        return representation.toString();
     }
 }

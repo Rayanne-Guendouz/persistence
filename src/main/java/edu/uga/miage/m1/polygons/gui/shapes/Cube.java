@@ -1,13 +1,21 @@
 package edu.uga.miage.m1.polygons.gui.shapes;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
+
 import edu.uga.miage.m1.polygons.gui.persistence.Visitable;
 import edu.uga.miage.m1.polygons.gui.persistence.Visitor;
 import edu.uga.singleshape.CubePanel;
 
 public class Cube implements SimpleShape, Visitable {
 
+<<<<<<< HEAD
     int x;
+=======
+    boolean isSelected = false;
+
+    int m_x;
+>>>>>>> 9e42618 (composable 1er version)
 
     int y;
 
@@ -31,32 +39,42 @@ public class Cube implements SimpleShape, Visitable {
     }
 
     @Override
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    @Override
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
 
-    @Override
+
     public int getX() {
         return x;
     }
 
-    @Override
+
     public int getY() {
         return y;
     }
 
-    @Override
+
     public void setX(int x) {
         this.x = x;
     }
 
-    @Override
+
     public void setY(int y) {
         this.y = y;
     }
 
     @Override
-    public boolean contains(java.awt.Point point) {
+    public boolean contains(Point point) {
         boolean res = false ;
         if (point.getX() >= x && point.getX() <= x + 50 && point.getY() >= y && point.getY() <= y + 50) {
             res = true ;
@@ -73,6 +91,12 @@ public class Cube implements SimpleShape, Visitable {
     public void setXY(int x, int y) {
         setX(x);
         setY(y);
+    }
+
+    @Override
+    public void move(int x, int y) {
+        m_x = x - 25;
+        m_y = y - 25;
     }
     
 }

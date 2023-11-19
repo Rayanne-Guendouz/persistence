@@ -1,18 +1,36 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+<<<<<<< HEAD
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame,600,416,38,10,156,89,63,15,38,13
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.SauvegardeActionListener,4,6,0,0,2,1,1,1,1,1
+=======
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame,511,417,31,10,114,84,38,10,18,8
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.SauvegardeActionListener,0,10,0,0,0,3,0,2,0,2
+>>>>>>> 9e42618 (composable 1er version)
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,GUIHelper.new WindowAdapter() {...},6,0,0,0,3,0,2,0,2,0
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.stateOfPaint,0,13,0,0,0,4,0,3,0,3
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.RegroupeActionListener,4,6,0,0,2,1,1,1,1,1
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,RemoteControl,24,8,2,0,7,3,4,1,3,1
+<<<<<<< HEAD
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,StateOfPaint,0,10,0,0,0,4,0,3,0,3
+=======
+>>>>>>> 9e42618 (composable 1er version)
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,App,6,0,0,0,3,0,2,0,2,0
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.Shapes,0,44,0,0,0,2,0,1,0,1
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.KeyEventController,41,6,6,0,8,1,4,1,1,1
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,JDrawingFrame.ShapeActionListener,3,44,1,3,1,11,1,3,0,2
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui,GUIHelper,21,0,0,0,7,0,2,0,2,0
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui.persistence,JSonVisitor,8,33,0,0,2,10,1,5,1,5
-Persistence_g1_8,edu.uga.miage.m1.polygons.gui.persistence,XMLVisitor,8,33,0,0,2,10,1,5,1,5
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.persistence,JSonVisitor,55,87,4,0,10,12,4,6,2,6
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.persistence,XMLVisitor,55,87,2,0,8,12,3,6,2,6
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.commands,GoBack,10,0,0,0,5,0,2,0,2,0
+<<<<<<< HEAD
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Triangle,4,207,3,7,2,36,4,12,1,10
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Square,4,146,3,5,2,29,4,11,1,10
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Cube,4,94,3,5,2,24,4,11,1,10
 Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Circle,4,146,3,5,2,29,4,11,1,10
+=======
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,ComplexShape,109,0,8,0,22,0,11,0,7,0
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Triangle,65,145,8,2,13,22,10,5,6,4
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Square,65,84,8,0,13,15,10,4,6,4
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Cube,95,0,8,0,22,0,14,0,10,0
+Persistence_g1_8,edu.uga.miage.m1.polygons.gui.shapes,Circle,65,84,8,0,13,15,10,4,6,4
+>>>>>>> 9e42618 (composable 1er version)
