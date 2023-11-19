@@ -44,7 +44,7 @@ public interface SimpleShape extends Serializable {
 
     public abstract String typeOfShape();
 
-    public abstract void setXY(int x, int y);
+    //public abstract void setXY(int x, int y);
 
     
 

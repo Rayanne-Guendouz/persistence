@@ -32,22 +32,14 @@ public class Circle implements SimpleShape, Visitable, Cloneable {
 
     boolean isSelected;
 
-    int x;
+    int m_x;
 
-    int y;
+    int m_y;
 
     public Circle(int x, int y) {
-<<<<<<< HEAD
-        setXY(x-25, y-25);
-    }
-
-    public Circle(SimpleShape shape) {
-        setXY(shape.getX(), shape.getY());
-=======
         m_x = x - 25;
         m_y = y - 25;
         isSelected = false;
->>>>>>> 9e42618 (composable 1er version)
     }
 
     /**
@@ -98,12 +90,12 @@ public class Circle implements SimpleShape, Visitable, Cloneable {
 
     @Override
     public void setX(int x) {
-        this.x = x;
+        this.m_x = x;
     }
 
     @Override
     public void setY(int y) {
-        this.y = y;
+        this.m_y = y;
     }
 
     @Override
@@ -121,17 +113,9 @@ public class Circle implements SimpleShape, Visitable, Cloneable {
     }
 
     @Override
-<<<<<<< HEAD
-    public void setXY(int x, int y) {
-        setX(x);
-        setY(y);
-    }
-    
-=======
     public void move(int x, int y) {
         m_x = x - 25;
         m_y = y - 25;
     }
 
->>>>>>> 9e42618 (composable 1er version)
 }

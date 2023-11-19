@@ -20,13 +20,7 @@ public class JSonVisitor implements Visitor {
     private static final String END_COMPLEX = "]}";
 
     public JSonVisitor() {
-<<<<<<< HEAD
-        // Nothing to do
-        // Don't remove this method even if it is empty
-        // Don't use for this moment
-=======
         representation = new StringBuilder();
->>>>>>> 9e42618 (composable 1er version)
     }
 
     @Override
